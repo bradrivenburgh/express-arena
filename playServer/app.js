@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 app.get('/apps', (req, res) => {
   // Get the values from the request
   const { genres, sort } = req.query;
-  const results = playstore;
+  let results = playstore;
 
   // Validate the optional 'sort' and 'genres' parameters
   if (sort) {
@@ -32,14 +32,23 @@ app.get('/apps', (req, res) => {
       }
   }
 
-  // Implement the sorting function: takes 'rating' or 'app';
-  // other values should result in an error; no value means
-  // no sort.
+  // Implement the genre filter: must be one of the following
+  // values: Action, Puzzle, Strategy, Casual, Arcade, Card.
+  // Any other value results in an error. 
+ 
+  if (genres) {
+    results = results
+      .filter((app) => genres === app.Genres)
+  }
+
+  // Implement the sorting functionality
   if (sort) {
     if (sort === 'App') {
+      // This sort works better for alphabetical lists
       results
        .sort((a, b) => a[sort].localeCompare(b[sort]));
-    } else {      
+    } else {
+      // This sort works well for everything else     
       results
         .sort((a, b) => {
           return a[sort] > b[sort] ? 1 : a[sort] < b[sort] ? -1 : 0;
@@ -47,10 +56,6 @@ app.get('/apps', (req, res) => {
     }
   }
 
-  // Implement the genre filter: must be one of the following
-  // values: Action, Puzzle, Strategy, Casual, Arcade, Card.
-  // Any other value results in an error. 
- 
-  // Return the playstore data in json format
+  // Return the results in json format
   res.json(results);
 });
