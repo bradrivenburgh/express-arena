@@ -51,7 +51,7 @@ app.get('/apps', (req, res) => {
       // This sort works well for everything else     
       results
         .sort((a, b) => {
-          return a[sort] > b[sort] ? 1 : a[sort] < b[sort] ? -1 : 0;
+          return a[sort] - b[sort];
       });
     }
   }
