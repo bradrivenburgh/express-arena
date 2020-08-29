@@ -137,8 +137,8 @@ app.get('/frequency', (req, res) => {
       .send('Invalid request')
   }
 
-  // Format the string (lowercase, create array, create object counting each char)
-  // and create the accumulator object
+  // Format the string (lowercase, create array, create 
+  // object counting each char) and create the accumulator object
   const record = str
     .toLowerCase()
     .split('')
@@ -164,9 +164,12 @@ app.get('/frequency', (req, res) => {
     }
   });
 
+  // Add the stats to the record object
   record.unique = unique;
   record.average = average;
   record.highest = highest;
+
+  // Send the response with the record object in JSON format
   res.json(record);  
 });
 
