@@ -3,7 +3,6 @@ const morgan = require('morgan');
 const playstore = require('./playstore');
 const app = express();
 app.use(morgan('dev'));
-app.listen(8000);
 
 app.get('/', (req, res) => {
   res.send('I\'m a root endpoint');
@@ -19,14 +18,14 @@ app.get('/apps', (req, res) => {
     if (!['Rating', 'App'].includes(sort)) {
       return res
         .status(400)
-        .send('Sort must be one of "rating" or "app"');
+        .send('Sort must be one of "Rating" or "App"');
     }
   }
 
   if (genres) {
     if (!['Action', 'Puzzle', 'Strategy', 'Casual', 'Arcade', 'Card']
       .includes(genres)) {
-        res
+        return res
           .status(400)
           .send('Genres must be one of "Action", "Puzzle", "Strategy", "Casual", "Arcade", or "Card"');
       }
@@ -59,3 +58,5 @@ app.get('/apps', (req, res) => {
   // Return the results in json format
   res.json(results);
 });
+
+module.exports = app;
