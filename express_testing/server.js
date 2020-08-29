@@ -1,6 +1,4 @@
 const app = require('./app');
 
-// Set up root endpoint
-app.get('/', (req, res) => {
-  res.send('Hello Express!')
-});
+// Listen to port 8000
+app.listen(8000);
